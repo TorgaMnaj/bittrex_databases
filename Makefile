@@ -13,14 +13,10 @@ devinstall:	## Install development tools
 bootstrap:  	## Bootstrap project or fix existing copy
 	sudo apt update
 	cat requirements.apt | xargs sudo apt install -y
-	python3 -m venv venv
-	$(PIP_BIN) install -r requirements.txt
-
-upgradevenv:  	## Upgrade python3 virtualenv
-	python3 -m venv --upgrade venv
+	pip3 install -r requirements.txt
 
 run:  		## Start development version of application
-	$(PYTHON_BIN) $(APP)
+	python3 $(APP)
 
 bashtests:  	## Run bash scripts tests
 	bash ./.devbin/shtests.sh

@@ -15,3 +15,6 @@ Syntax for changelog:
 
 
 
+--- 0.2.0 - Project setup plus MariaDB script.
+    Basic project and directory setup. Script for MariaDB installation and setup. Project planning.
+

@@ -1,4 +1,3 @@
-*.egg-info
 *.pyc
 .cache/
 .pytest_cache/
@@ -11,3 +10,4 @@ venv/
 logs/
 log/
 include/
+.env
