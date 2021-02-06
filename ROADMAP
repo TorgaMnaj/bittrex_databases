@@ -2,18 +2,17 @@
 # Each changelog record uses same versioning naming and same test naming.
 
 --- 0.1.0:
-	.Placeholder for project planing, architecture, steps and versions.
-	Project description. Project planning.
-	Setting up docker, initial files and folders.
+    .Placeholder for project planing, architecture, steps and versions.
+    Project description. Project planning.
+    Setting up docker, initial files and folders.
     Initial install scripts, Mariadb setup scripts.
 
 --- 0.2.0:
-    Scripts for retrieving data from Bittrex.com and for
-    historical data from CryptoCompare.
+    Api for retrieving data from Bittrex.com.
 
 --- 0.3.0:
     Databases creation and refill with historical data
-    if empty.
+    if empty. Tables have time, OHLC, Volume BTC, Volume USD, Data Source.
 
 --- 0.4.0:
     Loading all candlesticks with realtime data. Synchronization
@@ -23,4 +22,4 @@
     Container for backing up data.
 
 --- 0.6.0:
-    Container for data consistency and repairs.
+    Container for data consistency and repairs. Cryptocompare alternative.

@@ -39,7 +39,9 @@ MariaDB prompt from your terminal:
 	sudo mariadb
 
 Then create a new user with root privileges and password-based access. Be sure to
-change the username and password to match your preferences:
+change the username and password to match your preferences.
+
+Write to shell:
 
 	GRANT ALL ON *.* TO 'admin'@'localhost' IDENTIFIED BY 'password' WITH GRANT OPTION;
 
@@ -78,7 +80,7 @@ echo -e "
 
 ENTER:
 
-sudo -u user mysqladmin -u user -p version
+mariadb -u user -ppassword
 
 "
 

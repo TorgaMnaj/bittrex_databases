@@ -18,3 +18,6 @@ Syntax for changelog:
 --- 0.2.0 - Project setup plus MariaDB script.
     Basic project and directory setup. Script for MariaDB installation and setup. Project planning.
 
+--- 0.3.0 - Bittrex API
+    Created Bittrex API. Some folder changes.
+

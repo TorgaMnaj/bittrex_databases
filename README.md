@@ -11,7 +11,7 @@ Every following step is encapsulated in Docker:
 - Main container (runs multiplied):
     - We'll create databases for 1, 5 and 60 minuts candlesticks</br>
       and create tables for each pair on Bittrex.com if not presented.</br>
-      Each table has time as primary key and OHLC.
+      Each table has time as primary key and OHLC, Volume BTC Volume USD and Data Source.
     - We will refill history of 60 min. candlesticks if tables are completelly empty.
     - We start filling up databases with realtime data from Bittrex.com</br>
       using Tor circuit.

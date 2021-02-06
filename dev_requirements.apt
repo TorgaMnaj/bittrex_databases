@@ -9,3 +9,4 @@ python3-pytest
 pylint
 shellcheck
 mariadb-server
+python3-requests
