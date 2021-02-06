@@ -24,3 +24,6 @@ Syntax for changelog:
 --- 0.4.0 - Databases creation
     Module for creating all neccessary databases.
 
+--- 0.4.1 - Minor Databases.py changes
+    Minor Databases.py tweaks.
+
