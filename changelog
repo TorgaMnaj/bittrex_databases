@@ -21,3 +21,6 @@ Syntax for changelog:
 --- 0.3.0 - Bittrex API
     Created Bittrex API. Some folder changes.
 
+--- 0.4.0 - Databases creation
+    Module for creating all neccessary databases.
+

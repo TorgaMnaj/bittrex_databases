@@ -55,11 +55,7 @@ commit () {
 	)
 	# Pytests:
 	PYFILES=$(find . -name "*.py")
-  python3 -m pytest pytests/
-  for i in $PYFILES
-  do
-    pylint "$i"
-  done
+	python3 -m pytest pytests/
 	#
 	while true
 	do

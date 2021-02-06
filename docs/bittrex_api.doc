@@ -1,0 +1,18 @@
+
+All REST requests must be sent to https://api.bittrex.com/v3 using the
+application/json content type. Non-HTTPS requests will be redirected to HTTPS,
+possibly causing functional or performance issues with your application.
+
+links:
+
+https://api.bittrex.com/v3/currencies
+https://api.bittrex.com/v3/currencies/{symbol}
+https://api.bittrex.com/v3/markets
+https://api.bittrex.com/v3/markets/summaries
+https://api.bittrex.com/v3/markets/tickers
+https://api.bittrex.com/v3/markets/{marketSymbol}/ticker
+https://api.bittrex.com/v3/markets/{marketSymbol}
+https://api.bittrex.com/v3/markets/{marketSymbol}/orderbook
+https://api.bittrex.com/v3/markets/{marketSymbol}/trades
+https://api.bittrex.com/v3/ping
+

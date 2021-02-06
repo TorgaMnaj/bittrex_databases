@@ -7,19 +7,19 @@
     Setting up docker, initial files and folders.
     Initial install scripts, Mariadb setup scripts.
 
---- 0.2.0:
+--- 0.3.0:
     Api for retrieving data from Bittrex.com.
 
---- 0.3.0:
+--- 0.4.0:
     Databases creation and refill with historical data
     if empty. Tables have time, OHLC, Volume BTC, Volume USD, Data Source.
 
---- 0.4.0:
+--- 0.5.0:
     Loading all candlesticks with realtime data. Synchronization
     with another containers.
 
---- 0.5.0:
+--- 0.6.0:
     Container for backing up data.
 
---- 0.6.0:
+--- 0.7.0:
     Container for data consistency and repairs. Cryptocompare alternative.
