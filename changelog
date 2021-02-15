@@ -27,3 +27,6 @@ Syntax for changelog:
 --- 0.4.1 - Minor Databases.py changes
     Minor Databases.py tweaks.
 
+--- 0.4.2 - Initial databases data fill and logging.
+    Improved logging, structure and initial market and currencies info filling.
+

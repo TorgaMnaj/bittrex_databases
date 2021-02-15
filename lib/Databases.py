@@ -2,6 +2,9 @@
 # Copyright (c) 2021 janmagrot@gmail.com
 
 import pymysql
+import logging
+
+module_logging = logging.getLogger("bittrex_database." + __name__)
 
 
 def parse_sql_file(filename, variable=None, replacement=None):
@@ -52,17 +55,20 @@ def parse_sql_file(filename, variable=None, replacement=None):
 
 def createDatabases():
 	"""
-	Function for creating tables.
+	Function for creating databases.
 	:return:
 	"""
 	conn = pymysql.connect(host='localhost',
 	                       user='jan',
 	                       password='17051982')
+	func_logging = logging.getLogger("bittrex_database." + str(__name__) + ".createDatabases()")
 	stmts = parse_sql_file("./databases/create_databases.sql")
 	with conn.cursor() as cursor:
 		for stmt in stmts:
 			cursor.execute(stmt)
 	conn.commit()
+	func_logging.info("Initial empty databases without columns, have been created.")
+	return True
 
 
 def createCurrenciesInfoDatabases(currencies, database):
@@ -77,25 +83,22 @@ def createCurrenciesInfoDatabases(currencies, database):
 	                       user='jan',
 	                       password='17051982',
 	                       database=database)
+	func_logging = logging.getLogger("bittrex_database." + str(__name__) + ".createCurrenciesInfoDatabases()")
 	for ix in currencies:
 		with conn.cursor() as cur:
 			comm = f'CREATE OR REPLACE TABLE `{ix}` (' \
 			       f'symbol CHAR(12) NOT NULL, ' \
 			       f'name CHAR(20) NOT NULL, ' \
-			       f'coinType CHAR(20) NOT NULL,' \
 			       f'status CHAR(10) NOT NULL,' \
-			       f'minConfirmations TINYINT NOT NULL,' \
-			       f'notice TEXT,' \
-			       f'txFee FLOAT,' \
-			       f'logoUrl TEXT,' \
-			       f'prohibitedIn TEXT,' \
-			       f'baseAddress CHAR,' \
-			       f'associatedTermsOfService TEXT,' \
-			       f'tags TEXT,' \
+			       f'minConfirmations TINYINT NOT NULL ,' \
+			       f'txFee DOUBLE,' \
+			       f'baseAddress CHAR(180),' \
 			       f'PRIMARY KEY (symbol)' \
 			       f') ENGINE=Maria'
 			cur.execute(comm)
 	conn.commit()
+	func_logging.info("Currencies info database have been initiated with empty columns.")
+	return True
 
 
 def createMarketsInfoDatabases(markets, database):
@@ -110,7 +113,9 @@ def createMarketsInfoDatabases(markets, database):
 	                       user='jan',
 	                       password='17051982',
 	                       database=database)
+	func_logging = logging.getLogger("bittrex_database." + str(__name__) + ".createMarketsInfoDatabases()")
 	for ix in markets:
+		ix = "_".join(str(ix).split("-"))
 		with conn.cursor() as cur:
 			comm = f'CREATE OR REPLACE TABLE `{ix}` (' \
 			       f'symbol CHAR(20) NOT NULL, ' \
@@ -119,14 +124,12 @@ def createMarketsInfoDatabases(markets, database):
 			       f'minTradeSize FLOAT NOT NULL, ' \
 			       f'pprecision TINYINT NOT NULL, ' \
 			       f'status CHAR(10) NOT NULL, ' \
-			       f'createdAt CHAR(40), ' \
-			       f'prohibitedIn TEXT, ' \
-			       f'associatedTermsOfService TEXT, ' \
-			       f'tags TEXT, ' \
 			       f'PRIMARY KEY (symbol)' \
 			       f') ENGINE=Maria'
 			cur.execute(comm)
 	conn.commit()
+	func_logging.info("Markets info database have been initiated with empty columns.")
+	return True
 
 
 def createOneMinuteCandles(markets, database):
@@ -140,6 +143,7 @@ def createOneMinuteCandles(markets, database):
 	                       user='jan',
 	                       password='17051982',
 	                       database=database)
+	func_logging = logging.getLogger("bittrex_database." + str(__name__) + ".createOneMinuteCandles()")
 	for ix in markets:
 		with conn.cursor() as cur:
 			comm = f'CREATE OR REPLACE TABLE `{ix}` (' \
@@ -156,6 +160,8 @@ def createOneMinuteCandles(markets, database):
 			       f') ENGINE=Maria'
 			cur.execute(comm)
 	conn.commit()
+	func_logging.info("One minute candles database have been initiated with empty columns.")
+	return True
 
 
 def createFiveMinuteCandles(markets, database):
@@ -169,6 +175,7 @@ def createFiveMinuteCandles(markets, database):
 	                       user='jan',
 	                       password='17051982',
 	                       database=database)
+	func_logging = logging.getLogger("bittrex_database." + str(__name__) + ".createFiveMinuteCandles()")
 	for ix in markets:
 		with conn.cursor() as cur:
 			comm = f'CREATE OR REPLACE TABLE `{ix}` (' \
@@ -185,6 +192,8 @@ def createFiveMinuteCandles(markets, database):
 			       f') ENGINE=Maria'
 			cur.execute(comm)
 	conn.commit()
+	func_logging.info("Five minutes candles database have been initiated with empty columns.")
+	return True
 
 
 def createOneHourCandles(markets, database):
@@ -198,6 +207,7 @@ def createOneHourCandles(markets, database):
 	                       user='jan',
 	                       password='17051982',
 	                       database=database)
+	func_logging = logging.getLogger("bittrex_database." + str(__name__) + ".createOneHourCandles()")
 	for ix in markets:
 		with conn.cursor() as cur:
 			comm = f'CREATE OR REPLACE TABLE `{ix}` (' \
@@ -214,6 +224,8 @@ def createOneHourCandles(markets, database):
 			       f') ENGINE=Maria'
 			cur.execute(comm)
 	conn.commit()
+	func_logging.info("One hour candles database have been initiated with empty columns.")
+	return True
 
 
 def createAllDatabases(currencies, markets):
@@ -227,4 +239,89 @@ def createAllDatabases(currencies, markets):
 	createOneMinuteCandles(markets, "oneminutecandles")
 	createFiveMinuteCandles(markets, "fiveminutescandles")
 	createOneHourCandles(markets, "onehourcandles")
+	module_logging.info("All databases have been created.")
+	return True
+
+
+def removeAllDatabases():
+	conn = pymysql.connect(host='localhost',
+	                       user='jan',
+	                       password='17051982')
+	func_logging = logging.getLogger("bittrex_database." + str(__name__) + ".removeAllDatabases()")
+	stmts = parse_sql_file("./databases/delete_databases.sql")
+	with conn.cursor() as cursor:
+		for stmt in stmts:
+			cursor.execute(stmt)
+	conn.commit()
+	func_logging.info("All created databases have been deleted.")
+	return True
+
+
+def insertCurrenciesInfo(currency, currinfo):
+	"""
+	Inserts informations about currencies
+	to table.
+	:return:
+	"""
+	func_logging = logging.getLogger("bittrex_database." + str(__name__) + ".insertCurrenciesInfo()")
+	conn = pymysql.connect(host='localhost',
+	                       user='jan',
+	                       password='17051982',
+	                       database="currenciesinfo")
+	symbol = str(currinfo["symbol"])
+	name = str(currinfo["name"])
+	status = str(currinfo["status"])
+	if "minConfirmations" in currinfo.keys():
+		minConfirmations = int(currinfo["minConfirmations"])
+	else:
+		minConfirmations = ""
+	if "txFee" in currinfo.keys():
+		txFee = float(currinfo["txFee"])
+	else:
+		txFee = ""
+	if "baseAddress" in currinfo.keys():
+		baseAddress = str(currinfo["baseAddress"])
+	else:
+		baseAddress = ""
+	try:
+		with conn.cursor() as curr:
+			comm = f"INSERT IGNORE INTO {currency}(symbol, name, status, minConfirmations, " \
+			       f"txFee, baseAddress) VALUES('{symbol}','{name}','{status}',{minConfirmations}," \
+			       f"{txFee},'{baseAddress}');"
+			curr.execute(comm)
+		conn.commit()
+	except Exception:
+		func_logging.exception("Exception during inserting currencies informations.")
+	func_logging.debug("Databases about currencies info have been filled with data.")
+	return True
+
+
+def insertMarketsInfo(market, marketinfo):
+	"""
+	Inserts informations about currencies
+	to table.
+	:return:
+	"""
+	func_logging = logging.getLogger("bittrex_database." + str(__name__) + ".insertMarketsInfo()")
+	conn = pymysql.connect(host='localhost',
+	                       user='jan',
+	                       password='17051982',
+	                       database="marketinfo")
+	market = "_".join(str(market).split("-"))
+	symbol = "_".join(str(marketinfo["symbol"]).split("-"))
+	baseCurrencySymbol = str(marketinfo["baseCurrencySymbol"])
+	quoteCurrencySymbol = str(marketinfo["quoteCurrencySymbol"])
+	minTradeSize = float(marketinfo["minTradeSize"])
+	pprecision = int(marketinfo["precision"])
+	status = str(marketinfo["status"])
+	try:
+		with conn.cursor() as curr:
+			comm = f"INSERT IGNORE INTO {market}(symbol, baseCurrencySymbol, quoteCurrencySymbol, minTradeSize, " \
+			       f"pprecision, status) VALUES('{symbol}','{baseCurrencySymbol}','{quoteCurrencySymbol}',{minTradeSize}," \
+			       f"{pprecision},'{status}');"
+			curr.execute(comm)
+		conn.commit()
+	except Exception:
+		func_logging.exception("Exception during inserting markets informations.")
+	func_logging.debug("Databases about markets info have been filled with data.")
 	return True

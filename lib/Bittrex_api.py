@@ -52,7 +52,7 @@ class PublicApi:
 			else:
 				response = raw.json()
 				if raw.ok:
-					self._logging.info("Response is presented and succesfull.")
+					self._logging.debug("Response is presented and succesfull.")
 					return response
 				else:
 					msg = str(response["message"])
@@ -94,8 +94,8 @@ class PublicApi:
 		Get informations about all Bittrex Markets.
 		:return:
 		"""
-		s = self.__getPublicQueryWrapper("markets")
-		return {i["symbol"]: i for i in s}
+		d = self.__getPublicQueryWrapper("markets")
+		return {i["symbol"]: i for i in d}
 
 	def getAllMarketsSummaries(self):
 		"""
@@ -103,16 +103,16 @@ class PublicApi:
 		last 24 hours.
 		:return:
 		"""
-		s = self.__getPublicQueryWrapper("markets/summaries")
-		return {i["symbol"]: i for i in s}
+		x = self.__getPublicQueryWrapper("markets/summaries")
+		return {i["symbol"]: i for i in x}
 
 	def getAllMarketsTicker(self):
 		"""
 		Returns ticker for all markets on Bittrex.
 		:return:
 		"""
-		s = self.__getPublicQueryWrapper("markets/tickers")
-		return {i["symbol"]: i for i in s}
+		r = self.__getPublicQueryWrapper("markets/tickers")
+		return {i["symbol"]: i for i in r}
 
 	def pingBittrex(self):
 		"""
@@ -120,12 +120,3 @@ class PublicApi:
 		:return:
 		"""
 		return dict(eval(self.__getRaw("ping").text))
-
-
-import json
-
-Pa = PublicApi()
-ci = Pa.getAllMarketsInfo()
-#s = list(ci.keys())
-s = json.dumps(ci, indent=4)
-print(s)

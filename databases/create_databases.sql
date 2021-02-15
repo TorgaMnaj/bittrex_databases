@@ -2,8 +2,8 @@
 # Creates Databases
 ###############################
 
-create database currenciesinfo;
-create database marketinfo;
-create database oneminutecandles;
-create database fiveminutescandles;
-create database onehourcandles;
+CREATE DATABASE currenciesinfo;
+CREATE DATABASE marketinfo;
+CREATE DATABASE oneminutecandles;
+CREATE DATABASE fiveminutescandles;
+CREATE DATABASE onehourcandles;
